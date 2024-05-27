@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="campaign_menu_UI_assets.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EASY0000" x="0" y="0" width="196" height="65"/>
+	<SubTexture name="HARD0000" x="196" y="0" width="211" height="67"/>
+	<SubTexture name="NORMAL0000" x="0" y="67" width="308" height="67"/>
+	<SubTexture name="arrow left0000" x="308" y="67" width="48" height="85"/>
+	<SubTexture name="arrow push left0000" x="356" y="67" width="42" height="75"/>
+	<SubTexture name="arrow push right0000" x="398" y="67" width="41" height="74"/>
+	<SubTexture name="arrow right0000" x="439" y="67" width="47" height="85"/>
+	<SubTexture name="weekDOWN0000" x="0" y="152" width="118" height="54" frameX="0" frameY="0" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0001" x="118" y="152" width="118" height="54" frameX="0" frameY="-2" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0002" x="118" y="152" width="118" height="54" frameX="0" frameY="-4" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0003" x="118" y="152" width="118" height="54" frameX="0" frameY="-6" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0004" x="118" y="152" width="118" height="54" frameX="0" frameY="-7" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0005" x="118" y="152" width="118" height="54" frameX="0" frameY="-9" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0006" x="118" y="152" width="118" height="54" frameX="0" frameY="-11" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0007" x="118" y="152" width="118" height="54" frameX="0" frameY="-13" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0008" x="118" y="152" width="118" height="54" frameX="0" frameY="-14" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0009" x="118" y="152" width="118" height="54" frameX="0" frameY="-16" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0010" x="118" y="152" width="118" height="54" frameX="0" frameY="-18" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0011" x="118" y="152" width="118" height="54" frameX="0" frameY="-20" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0012" x="118" y="152" width="118" height="54" frameX="0" frameY="-21" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0013" x="118" y="152" width="118" height="54" frameX="0" frameY="-23" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekDOWN0014" x="118" y="152" width="118" height="54" frameX="0" frameY="-25" frameWidth="118" frameHeight="79"/>
+	<SubTexture name="weekUP0000" x="236" y="152" width="118" height="54" frameX="0" frameY="-22" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0001" x="236" y="152" width="118" height="54" frameX="0" frameY="-21" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0002" x="236" y="152" width="118" height="54" frameX="0" frameY="-19" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0003" x="236" y="152" width="118" height="54" frameX="0" frameY="-18" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0004" x="236" y="152" width="118" height="54" frameX="0" frameY="-16" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0005" x="236" y="152" width="118" height="54" frameX="0" frameY="-14" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0006" x="236" y="152" width="118" height="54" frameX="0" frameY="-13" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0007" x="236" y="152" width="118" height="54" frameX="0" frameY="-11" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0008" x="236" y="152" width="118" height="54" frameX="0" frameY="-10" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0009" x="236" y="152" width="118" height="54" frameX="0" frameY="-8" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0010" x="236" y="152" width="118" height="54" frameX="0" frameY="-7" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0011" x="236" y="152" width="118" height="54" frameX="0" frameY="-5" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0012" x="236" y="152" width="118" height="54" frameX="0" frameY="-3" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0013" x="236" y="152" width="118" height="54" frameX="0" frameY="-2" frameWidth="118" frameHeight="76"/>
+	<SubTexture name="weekUP0014" x="236" y="152" width="118" height="54" frameX="0" frameY="0" frameWidth="118" frameHeight="76"/>
+</TextureAtlas>
