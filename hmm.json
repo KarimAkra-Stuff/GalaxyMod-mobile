@@ -1,0 +1,45 @@
+{
+    "dependencies": [
+      {
+        "name": "lime",
+        "type": "haxelib",
+        "version": "7.9.0"
+      },
+      {
+        "name": "openfl",
+        "type": "haxelib",
+        "version": "9.2.1"
+      },
+      {
+        "name": "flixel",
+        "type": "haxelib",
+        "version": "4.11.0"
+      },
+      {
+        "name": "flixel-addons",
+        "type": "haxelib",
+        "version": "2.11.0"
+      },
+      {
+        "name": "flixel-ui",
+        "type": "haxelib",
+        "version": "2.4.0"
+      },
+      {
+        "name": "hxcpp",
+        "type":"haxelib",
+        "version": "4.2.1"
+      },
+      {
+        "name": "hxvlc",
+        "type": "haxelib",
+        "version": "1.4.1"
+      },
+      {
+        "name": "extension-androidtools",
+        "type": "haxelib",
+        "version": null
+      }
+    ]
+  }
+  

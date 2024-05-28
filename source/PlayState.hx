@@ -1,5 +1,7 @@
 package;
-
+#if android
+import android.widget.Toast;
+#end
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -47,7 +49,6 @@ import lime.app.Promise;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import lime.utils.Assets as LimeAssets;
-import lime.utils.Assets;
 import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
@@ -1038,9 +1039,14 @@ class PlayState extends MusicBeatState
 	function bossVideo():Void
 	{
 		var video:BossVideo = new BossVideo();
-		video.finishCallback = startCountdown;
+		video.onEndReached.add(startCountdown, true);
 		video.canSkip = StoryMenuState.weekPassed[Std.int(Math.min(storyWeek, StoryMenuState.weekPassed.length - 1))][storyDifficulty];
-		video.playVideo(Paths.video(SONG.song.toLowerCase() + "/" + storyDifficulty));
+		#if mobile
+		video.load(Assets.getBytes(Paths.video(SONG.song.toLowerCase() + "/" + storyDifficulty)));
+		#else
+		video.load(Paths.video(SONG.song.toLowerCase() + "/" + storyDifficulty));
+		#end
+		video.play();
 		FlxG.sound.playMusic(Paths.music(SONG.song.toLowerCase()), 1, false);
 	}
 
@@ -1945,8 +1951,23 @@ class PlayState extends MusicBeatState
 
 			if (camZooming)
 			{
-				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-				camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, 0.95);
+				// stolen from psych 0.7-
+				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, Math.exp(-elapsed * 3.125 * 0.95));
+				camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, Math.exp(-elapsed * 3.125 * 0.95));
+
+
+				// FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+				// camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, 0.95);
+			}
+
+			
+			if(#if mobile FlxG.keys.justPressed.DOWN || #end FlxG.keys.justPressed.SPACE)
+			{
+				#if android
+				Toast.makeText('camHUD Zoom: ${camHUD.zoom}\nmain cam Zoom: ${FlxG.camera.zoom}', Toast.LENGTH_LONG);
+				#else
+				trace('camHUD Zoom: ${camHUD.zoom}\nmain cam Zoom: ${FlxG.camera.zoom}');
+				#end
 			}
 
 			FlxG.watch.addQuick("beatShit", curBeat);
@@ -2344,7 +2365,6 @@ class PlayState extends MusicBeatState
 		#if PRELOAD_ALL
 		sys.thread.Thread.create(() ->
 		{
-			reme.load();
 			if (!practice && SONG.validScore)
 			{
 				Highscore.saveScore(SONG.song, Math.round(songScore), acc, maxc, storyDifficulty, reme);
@@ -2355,7 +2375,6 @@ class PlayState extends MusicBeatState
 		{
 			Highscore.saveScore(SONG.song, Math.round(songScore), acc, maxc, storyDifficulty, reme);
 		}
-		reme.load();
 		#end
 	}
 
@@ -2363,36 +2382,36 @@ class PlayState extends MusicBeatState
 
 	private function getTrophies()
 	{
-		if (practice)
-			return;
+		// if (practice)
+		// 	return;
 
-		if (FlxG.save.data.trophies == null)
-			FlxG.save.data.trophies = [];
+		// if (FlxG.save.data.trophies == null)
+		// 	FlxG.save.data.trophies = [];
 
-		if (isStoryMode)
-		{
-			if (storyPlaylist.length <= 0 && storyDifficulty == 2)
-			{
-				if (storyWeek != 0)
-				{
-					if (!FlxG.save.data.trophies.contains(APIStuff.comWeek[storyWeek]))
-						FlxG.save.data.trophies.push(APIStuff.comWeek[storyWeek]);
-				}
-			}
-		}
-		if (misses == 0 && bads == 0 && shits == 0 && wrongs == 0 && APIStuff.fcs.exists(SONG.song) && storyDifficulty == 2)
-		{
-			if (!FlxG.save.data.trophies.contains(APIStuff.fcs.get(SONG.song)))
-				FlxG.save.data.trophies.push(APIStuff.fcs.get(SONG.song));
-		}
-		if (APIStuff.comSong.exists(SONG.song + "-" + storyDifficulty))
-		{
-			if (!FlxG.save.data.trophies.contains(APIStuff.comSong.get(SONG.song + "-" + storyDifficulty)))
-				FlxG.save.data.trophies.push(APIStuff.comSong.get(SONG.song + "-" + storyDifficulty));
-		}
+		// if (isStoryMode)
+		// {
+		// 	if (storyPlaylist.length <= 0 && storyDifficulty == 2)
+		// 	{
+		// 		if (storyWeek != 0)
+		// 		{
+		// 			if (!FlxG.save.data.trophies.contains(APIStuff.comWeek[storyWeek]))
+		// 				FlxG.save.data.trophies.push(APIStuff.comWeek[storyWeek]);
+		// 		}
+		// 	}
+		// }
+		// if (misses == 0 && bads == 0 && shits == 0 && wrongs == 0 && APIStuff.fcs.exists(SONG.song) && storyDifficulty == 2)
+		// {
+		// 	if (!FlxG.save.data.trophies.contains(APIStuff.fcs.get(SONG.song)))
+		// 		FlxG.save.data.trophies.push(APIStuff.fcs.get(SONG.song));
+		// }
+		// if (APIStuff.comSong.exists(SONG.song + "-" + storyDifficulty))
+		// {
+		// 	if (!FlxG.save.data.trophies.contains(APIStuff.comSong.get(SONG.song + "-" + storyDifficulty)))
+		// 		FlxG.save.data.trophies.push(APIStuff.comSong.get(SONG.song + "-" + storyDifficulty));
+		// }
 
-		trace(FlxG.save.data.trophies);
-		return;
+		// trace(FlxG.save.data.trophies);
+		// return;
 	}
 
 	private function justCombo():Void

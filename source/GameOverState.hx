@@ -75,6 +75,7 @@ class GameOverState extends FlxTransitionableState
 			FlxG.sound.music.fadeOut(0.5, 0, function(twn:FlxTween)
 			{
 				FlxG.sound.music.stop();
+				Main.skipNextDump = true;
 				LoadingState.loadAndSwitchState(new PlayState());
 			});
 		}

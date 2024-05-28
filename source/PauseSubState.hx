@@ -149,6 +149,7 @@ class PauseSubState extends MusicBeatSubstate
 						PlayWindow.reset();
 					close();
 				case "Restart Song":
+					Main.skipNextDump = true;
 					LoadingState.loadAndSwitchState(new PlayState(), true);
 				case "Practice Mode":
 					PlayState.practice = true;

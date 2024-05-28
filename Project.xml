@@ -27,7 +27,7 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" resizable="false" allow-shaders="true" require-shaders="true" allow-high-dpi="true" />
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -70,11 +70,11 @@
 	<assets path="assets/weeks"    library="weeks"    exclude="*.ogg" if="web"/>
 	<assets path="assets/weeks"    library="weeks"    exclude="*.mp3" unless="web"/>
 	
-	<assets path='example_mods' rename='mods' embed='false'/>
-	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+	<assets path='example_mods' rename='mods' embed='false' unless="mobile"/>
+	<assets path='art/readme.txt' rename='do NOT readme.txt' unless="mobile"/>
 	<!-- <template path='mods' /> -->
 	
-	<assets path="CHANGELOG.md" rename='changelog.txt'/>
+	<assets path="CHANGELOG.md" rename='changelog.txt' unless="mobile"/>
 
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
@@ -89,15 +89,16 @@
 
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
+	<!-- <haxelib name="hscript" /> -->
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
-	<haxelib name="newgrounds"/>
+	<!-- <haxelib name="newgrounds"/> -->
 	<haxelib name="faxe" if='switch'/>
-	<haxelib name="polymod"/>
-	<haxelib name="discord_rpc" if="desktop"/>
-	<haxelib name="hxCodec" if="desktop || android" />
+	<!-- <haxelib name="polymod"/> -->
+	<haxelib name="discord_rpc" if="desktop HAS_DISCORD_RPC"/>
+	<haxelib name="hxvlc" if="cpp" />
+	<haxelib name="extension-androidtools" if="android" />
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
 	<!-- <haxelib name="markdown" /> -->
@@ -138,6 +139,11 @@
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
 
+	<!--Always enable Null Object Reference check-->
+	<haxedef name="HXCPP_CHECK_POINTER" />
+	<haxedef name="HXCPP_STACK_LINE" />
+	<haxedef name="HXCPP_STACK_TRACE" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
@@ -147,8 +153,22 @@
 	<icon path="art/icon64.png" size='64'/>
 	<icon path="art/iconOG.png" />
 
+	<section if="mobile">
+		<section if="ONLY_ARM64">
+			<architecture exclude="armv7" />
+			<architecture include="arm64" />
+		</section>
+		<section if="ONLY_ARMV7">
+			<architecture include="armv7" />
+			<architecture exclude="arm64" />
+		</section>
+	</section>
 
-	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
-	<haxedef name="NG_LOGIN" if="newgrounds" />
-	
+	<section if="android">
+		<android gradle-version="7.4.2" gradle-plugin="7.3.1" />
+		<android target-sdk-version="29" />
+	</section>
+
+
+	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->	
 </project>

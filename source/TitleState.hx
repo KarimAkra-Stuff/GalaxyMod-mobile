@@ -26,7 +26,6 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
 import openfl.Lib;
@@ -87,12 +86,12 @@ class TitleState extends MusicBeatState
 			FlxG.save.data.weekPassed = StoryMenuState.weekPassed;
 		}
 
-		FlxGameJolt.init(APIStuff.gameID, APIStuff.privateKey, FlxG.save.data.userName != null, FlxG.save.data.userName, FlxG.save.data.userToken,
-			function(what:Bool)
-			{
-				if (what)
-					welcome = new Welcome();
-			});
+		// FlxGameJolt.init(APIStuff.gameID, APIStuff.privateKey, FlxG.save.data.userName != null, FlxG.save.data.userName, FlxG.save.data.userToken,
+		// 	function(what:Bool)
+		// 	{
+		// 		if (what)
+		// 			welcome = new Welcome();
+		// 	});
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
@@ -277,15 +276,7 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
-		#if mobile
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed)
-			{
-				pressedEnter = true;
-			}
-		}
-		#end
+		if(TouchUtil.justPressed) pressedEnter = true;
 
 		stars.forEachAlive(function(star:NoteObject)
 		{

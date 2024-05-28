@@ -398,7 +398,7 @@ class FPSOption extends Option
 	public override function left():Bool
 	{
 		if (!FlxG.save.data.FPS)
-			FlxG.save.data.FPS = 120;
+			FlxG.save.data.FPS = #if mobile 60 #else 120 #end;
 		if (FlxG.save.data.FPS > 30)
 			FlxG.save.data.FPS -= 1;
 		display = updateDisplay();
@@ -409,7 +409,7 @@ class FPSOption extends Option
 	public override function right():Bool
 	{
 		if (!FlxG.save.data.FPS)
-			FlxG.save.data.FPS = 120;
+			FlxG.save.data.FPS = #if mobile 60 #else 120 #end;
 		if (FlxG.save.data.FPS < 240)
 			FlxG.save.data.FPS += 1;
 		display = updateDisplay();
@@ -425,7 +425,7 @@ class FPSOption extends Option
 	private override function updateDisplay2():Array<String>
 	{
 		if (FlxG.save.data.FPS == null)
-			FlxG.save.data.FPS = 120;
+			FlxG.save.data.FPS = #if mobile 60 #else 120 #end;
 		FlxG.updateFramerate = FlxG.save.data.FPS;
 		FlxG.drawFramerate = FlxG.save.data.FPS;
 		return [FlxG.save.data.FPS + ""];
@@ -518,8 +518,6 @@ class AutoSyncOption extends Option
 	public override function press():Bool
 	{
 		FlxG.save.data.autoUpload = !FlxG.save.data.autoUpload;
-		if (FlxG.save.data.autoUpload && FlxGameJolt.initialized)
-			Main.syncData();
 		return true;
 	}
 

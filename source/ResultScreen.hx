@@ -168,15 +168,6 @@ class ResultScreen extends FlxSpriteGroup
 		FlxG.sound.playMusic(Paths.music('result'));
 	}
 
-	public function load()
-	{
-		if (FlxGameJolt.initialized)
-		{
-			var trop = new Welcome(1, Main.syncTrophy());
-			add(trop);
-		}
-	}
-
 	override function update(elapsed:Float)
 	{
 		lerpscore = Math.round(FlxMath.lerp(lerpscore, dascore, 0.2));

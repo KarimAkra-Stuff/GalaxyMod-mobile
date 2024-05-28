@@ -41,28 +41,28 @@ class Highscore
 		else
 			setCombo(daSong, com);
 
-		#if PRELOAD_ALL
-		if (APIStuff.boards.exists(song) && FlxGameJolt.initialized)
-		{
-			var task = true;
-			FlxGameJolt.addScore(score + "(" + acc + "%)", Math.floor(score * 100 + acc), APIStuff.boards.get(song)[diff], false, "", "", function(a:Dynamic)
-			{
-				task = false;
-				trace(APIStuff.boards.get(song)[diff]);
-				trace(a);
-			});
-			var k:Int = 0;
-			while (task && k < 30)
-			{
-				k += 1;
-				Sys.sleep(0.1);
-			}
-			if (FlxG.save.data.autoUpload && FlxGameJolt.initialized)
-			{
-				Main.syncData();
-			}
-		}
-		#end
+		// #if PRELOAD_ALL
+		// if (APIStuff.boards.exists(song) && FlxGameJolt.initialized)
+		// {
+		// 	var task = true;
+		// 	FlxGameJolt.addScore(score + "(" + acc + "%)", Math.floor(score * 100 + acc), APIStuff.boards.get(song)[diff], false, "", "", function(a:Dynamic)
+		// 	{
+		// 		task = false;
+		// 		trace(APIStuff.boards.get(song)[diff]);
+		// 		trace(a);
+		// 	});
+		// 	var k:Int = 0;
+		// 	while (task && k < 30)
+		// 	{
+		// 		k += 1;
+		// 		Sys.sleep(0.1);
+		// 	}
+		// 	if (FlxG.save.data.autoUpload && FlxGameJolt.initialized)
+		// 	{
+		// 		Main.syncData();
+		// 	}
+		// }
+		// #end
 	}
 
 	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void

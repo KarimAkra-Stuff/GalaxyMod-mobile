@@ -1,28 +1,24 @@
 package;
 
 import flixel.FlxG;
-import openfl.events.Event;
-import src.VideoHandler;
+import hxvlc.flixel.FlxVideo;
 
-class BossVideo extends VideoHandler
+class BossVideo extends FlxVideo
 {
+	public var canSkip:Bool = false;
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
-	override function update(?E:Event):Void
+	override private function postUpdate():Void
 	{
-		isPlaying = libvlc.isPlaying();
-		if (canSkip && controls.ACCEPT && initComplete)
+		if (canSkip && (controls.ACCEPT #if android || FlxG.android.justReleased.BACK #end))
 		{
 			FlxG.sound.music.stop();
-			onVLCComplete();
+			dispose();
 		}
 
-		if (FlxG.sound.muted || FlxG.sound.volume <= 0)
-			volume = 0;
-		else if (canUseSound)
-			volume = FlxG.sound.volume;
+		super.postUpdate();
 	}
 }

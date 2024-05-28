@@ -16,7 +16,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Lib;
 
@@ -58,12 +57,6 @@ class MainMenuState extends MusicBeatState
 
 	override function load()
 	{
-		if (FlxGameJolt.initialized)
-		{
-			trops = new Welcome(1, Main.syncTrophy());
-		}
-		if (FlxG.save.data.autoUpload && FlxGameJolt.initialized)
-			Main.syncData();
 		LoadingState.progress += 25;
 
 		stars = new FlxTypedGroup<NoteObject>();
@@ -191,8 +184,6 @@ class MainMenuState extends MusicBeatState
 		if (storied)
 			versionShit.alpha = 0;
 		add(versionShit);
-
-		// NG.core.calls.event.logEvent('swag').send();
 
 		textBox = new FlxSprite(0, 0);
 		textBox.scrollFactor.set();
