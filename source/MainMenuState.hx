@@ -33,11 +33,7 @@ class MainMenuState extends MusicBeatState
 	var bg:FlxSprite;
 	var versionShit:FlxText;
 
-	#if !switch
 	var optionShit:Array<String> = ['story mode', 'freeplay', "options", 'donate'];
-	#else
-	var optionShit:Array<String> = ['story mode', 'freeplay'];
-	#end
 
 	var objectlist:Array<Array<Dynamic>> = [
 		[58, 207, 189, 332, "DJ"],
@@ -205,6 +201,11 @@ class MainMenuState extends MusicBeatState
 
 		optioned = false;
 
+		#if mobileC
+		addVirtualPad(UP_DOWN, A_B);
+		addVirtualPadCamera();
+		#end
+
 		super.create();
 	}
 
@@ -212,6 +213,26 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		var shift = FlxG.keys.pressed.SHIFT;
+
+		if(FlxG.keys.justPressed.F || (shift && FlxG.keys.pressed.F))
+			FlxG.camera.flashSprite.width -= 1;
+		if(FlxG.keys.justPressed.H || (shift && FlxG.keys.pressed.H))
+			FlxG.camera.flashSprite.width += 1;
+		if(FlxG.keys.justPressed.T || (shift && FlxG.keys.pressed.T))
+			FlxG.camera.flashSprite.height -= 1;
+		if(FlxG.keys.justPressed.G || (shift && FlxG.keys.pressed.G))
+			FlxG.camera.flashSprite.height += 1;
+
+		if(FlxG.keys.justPressed.J || (shift && FlxG.keys.pressed.J))
+			FlxG.camera.x -= 1;
+		if(FlxG.keys.justPressed.L || (shift && FlxG.keys.pressed.L))
+			FlxG.camera.x += 1;
+		if(FlxG.keys.justPressed.I || (shift && FlxG.keys.pressed.I))
+			FlxG.camera.y -= 1;
+		if(FlxG.keys.justPressed.K || (shift && FlxG.keys.pressed.K))
+			FlxG.camera.y += 1;
+
 		/*allen 1 34 155 257
 			steer 7 383 250 543
 			switch 1039 361 1168 417
@@ -331,6 +352,7 @@ class MainMenuState extends MusicBeatState
 
 			if ((controls.ACCEPT || enter) && !ConfirmSubState.inconfirm)
 			{
+				#if mobileC FlxTween.tween(camVPad, {alpha: 0}, 0.4, {ease: FlxEase.quadOut}); #end
 				selectedSomethin = true;
 				versionShit.kill();
 				FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -370,10 +392,8 @@ class MainMenuState extends MusicBeatState
 												case 'story mode':
 													FlxTransitionableState.skipNextTransIn = true;
 													LoadingState.loadAndSwitchState(new StoryMenuState(), false, 1);
-													trace("Story Menu Selected");
 												case 'freeplay':
 													LoadingState.loadAndSwitchState(new FreeplayState());
-													trace("Freeplay Menu Selected");
 												case 'options':
 													LoadingState.loadAndSwitchState(new OptionsMenu());
 												case 'donate':

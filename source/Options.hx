@@ -311,7 +311,7 @@ class MouseOption extends Option
 	public override function press():Bool
 	{
 		if (!FlxG.save.data.mouse)
-			FlxG.save.data.mouse = 0;
+			FlxG.save.data.mouse = #if mobile 2 #else 0 #end;
 		FlxG.save.data.mouse += 1;
 		if (FlxG.save.data.mouse == names.length)
 			FlxG.save.data.mouse = 0;
@@ -324,7 +324,7 @@ class MouseOption extends Option
 	public override function left():Bool
 	{
 		if (!FlxG.save.data.mouse)
-			FlxG.save.data.mouse = 0;
+			FlxG.save.data.mouse = #if mobile 2 #else 0 #end;
 		FlxG.save.data.mouse -= 1;
 		if (FlxG.save.data.mouse == -1)
 			FlxG.save.data.mouse = names.length - 1;
@@ -345,7 +345,7 @@ class MouseOption extends Option
 	private override function updateDisplay2():Array<String>
 	{
 		if (!FlxG.save.data.mouse)
-			FlxG.save.data.mouse = 0;
+			FlxG.save.data.mouse = #if mobile 2 #else 0 #end;
 		return [names[FlxG.save.data.mouse]];
 	}
 }

@@ -124,9 +124,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
-		#if desktop
 		weekData[2] = ['cona', 'underworld', 'cyber'];
-		#end
 		if (FlxG.save.data.lang == 1)
 		{
 			weekNames = ["", "亞吉娜", "冥界卡莉法", "???"];
@@ -269,7 +267,9 @@ class StoryMenuState extends MusicBeatState
 
 		updateText(0);
 
-		trace("Line 165");
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 
 		super.create();
 	}
@@ -333,7 +333,7 @@ class StoryMenuState extends MusicBeatState
 					changeDifficulty(-1);
 			}
 
-			if (controls.ACCEPT || (!others && FlxG.mouse.justPressed))
+			if (controls.ACCEPT || (!others && FlxG.mouse.justPressed && MusicBeatState.mouseA))
 			{
 				selectWeek();
 			}

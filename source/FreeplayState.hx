@@ -48,13 +48,10 @@ class FreeplayState extends MusicBeatState
 	var gods:Array<String> = ["Kastimagina", "Cyber", "Peace"];
 	var godweeks:Array<Int> = [1, 2, 3];
 
+	var isDebug:Bool = true;
+
 	override function load()
 	{
-		var isDebug:Bool = false;
-
-		#if debug
-		isDebug = true;
-		#end
 
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 
@@ -66,23 +63,17 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekPassed[1].contains(true) || isDebug)
 		{
 			addSong("Kastimagina", 1, 'kastimagina', "Allen98637");
-			#if (desktop || web)
 			addSong('Familanna', 1, 'kastimagina', "Allen98637");
-			#end
 		}
 		addWeek(['Cona', 'Underworld'], 2, ['kalisa'], ["Allen98637"]);
 		if (StoryMenuState.weekPassed[2].contains(true) || isDebug)
 		{
-			#if desktop
 			addSong('Cyber', 2, 'kalisa', "Allen98637");
-			#end
 		}
 		addWeek(['Newton', 'Destiny'], 3, ['unknown'], ["Allen98637"]);
 		if (StoryMenuState.weekPassed[3].contains(true) || isDebug)
 		{
-			#if (desktop || web)
 			addSong('Peace', 3, 'unknown', "Allen98637");
-			#end
 		}
 		var tasks:Int = songs.length;
 		var task:Int = 0;
@@ -203,6 +194,10 @@ class FreeplayState extends MusicBeatState
 
 			trace(md);
 		 */
+
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 
 		super.create();
 	}
@@ -427,15 +422,24 @@ class FreeplayState extends MusicBeatState
 			var daDiff:Int = 0;
 			for (i in StoryMenuState.weekPassed[godweeks[gods.indexOf(songs[curSelected].songName)]])
 			{
-				if (i)
+				if (i || isDebug)
 					diffs.push(daDiff);
 				daDiff++;
 			}
-			var dex:Int = diffs.indexOf(curDifficulty);
-			dex += change;
-			dex += diffs.length;
-			dex %= diffs.length;
-			curDifficulty = diffs[dex];
+			
+			if(diffs.length == 0)
+			{
+				curDifficulty = diffs[0];
+			}
+			else
+			{
+
+				var dex:Int = diffs.indexOf(curDifficulty);
+				dex += change;
+				dex += diffs.length;
+				dex %= diffs.length;
+				curDifficulty = diffs[dex];
+			}
 		}
 		else
 		{

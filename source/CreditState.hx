@@ -21,8 +21,10 @@ import openfl.Lib;
 
 class CreditState extends MusicBeatState
 {
-	var ppl:Array<String> = ["Allen98637", "A-tang", "Neonfovii", "Magolor", "Sintaro", "Cana Lee", "Rin"];
+	// social credit points-
+	var ppl:Array<String> = ["Karim Akra", "Allen98637", "A-tang", "Neonfovii", "Magolor", "Sintaro", "Cana Lee", "Rin"];
 	var intros:Array<String> = [
+		"Mobile Porter of the mod :3",
 		"Code, engine, music, character design, story, charts, mod publishing",
 		"General Cutscene arts",
 		"General Character arts",
@@ -32,6 +34,7 @@ class CreditState extends MusicBeatState
 		"Title font design"
 	];
 	var colors:Array<Int> = [
+		0xffe16ccd,
 		0xFFff7f50,
 		0xFFffffff,
 		0xFF18928b,
@@ -41,6 +44,9 @@ class CreditState extends MusicBeatState
 		0xFF00db96
 	];
 	var links:Array<Map<String, String>> = [
+		[
+			"yt" => "https://www.youtube.com/channel/UCbGuoE4sNTIgeWBOJRCBNZQ" // UwU
+		],
 		[
 			"per" => "https://allen98637.github.io/",
 			"twe" => "https://twitter.com/allen98637",
@@ -145,6 +151,10 @@ class CreditState extends MusicBeatState
 		add(intro);
 
 		changeSelection(0);
+
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
 
 		super.create();
 	}

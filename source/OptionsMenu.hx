@@ -50,14 +50,19 @@ class OptionsMenu extends MusicBeatState
 		]));
 		LoadingState.progress = 25;
 		options.push(new OptionCategory("Controls", [new DFJKOption(controls), new UIKeyOption(controls)]));
+		// LoadingState.progress += 25;
+		LoadingState.progress += #if mobileC 25 #else 50 #end;
+		#if mobileC
+		options.push(new OptionCategory("Mobile Controls", []));
 		LoadingState.progress += 25;
-		options.push(new OptionCategory("Account", [new AccountOption("account")]));
-		if (FlxGameJolt.initialized)
-		{
-			options[2].addOption(new DataOption("bruh"));
-			options[2].addOption(new AutoSyncOption("bruh"));
-		}
-		LoadingState.progress += 25;
+		#end
+		// options.push(new OptionCategory("Account", [new AccountOption("account")]));
+		// if (FlxGameJolt.initialized)
+		// {
+		// 	options[2].addOption(new DataOption("bruh"));
+		// 	options[2].addOption(new AutoSyncOption("bruh"));
+		// }
+		// LoadingState.progress += 25;
 		options.push(new OptionCategory("Exit", []));
 		LoadingState.progress += 25;
 		super.load();
@@ -65,6 +70,7 @@ class OptionsMenu extends MusicBeatState
 
 	override function create()
 	{
+		#if mobile MusicBeatState.mouseA = false; #end
 		// clean();
 		instance = this;
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
@@ -93,6 +99,11 @@ class OptionsMenu extends MusicBeatState
 
 		changeSelection();
 
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B);
+		addVirtualPadCamera();
+		#end
+
 		super.create();
 	}
 
@@ -112,6 +123,7 @@ class OptionsMenu extends MusicBeatState
 			}
 			else if (controls.BACK)
 			{
+				FlxG.save.flush();
 				isCat = false;
 				grpControls.clear();
 				grpChildren.clear();
@@ -251,15 +263,26 @@ class OptionsMenu extends MusicBeatState
 				else
 				{
 					currentSelectedCat = options[curSelected];
-					isCat = true;
-					grpControls.clear();
-					grpChildren.clear();
-					if (currentSelectedCat.getName() == "Exit")
+					if(currentSelectedCat.getName() != "Mobile Controls")
 					{
-						MainMenuState.optioned = true;
-						MainMenuState.storied = true;
-						FlxTransitionableState.skipNextTransIn = true;
-						FlxG.switchState(new MainMenuState());
+						isCat = true;
+						grpControls.clear();
+						grpChildren.clear();
+					}
+					if (currentSelectedCat.getName() == "Exit" || currentSelectedCat.getName() == "Mobile Controls")
+					{
+						if(currentSelectedCat.getName() == "Exit") {
+							MainMenuState.optioned = true;
+							MainMenuState.storied = true;
+							FlxTransitionableState.skipNextTransIn = true;
+							FlxG.switchState(new MainMenuState());
+						} else {
+							grpControls.visible = false;
+							grpChildren.visible = false;
+							persistentUpdate = false;
+							#if mobileC virtualPad.visible = false; #end
+							openSubState(new mobile.MobileControlsSubState());
+						}
 					}
 					else
 					{
@@ -307,7 +330,6 @@ class OptionsMenu extends MusicBeatState
 				changeSelection();
 			}
 		}
-		FlxG.save.flush();
 	}
 
 	var isSettingControl:Bool = false;
@@ -405,5 +427,20 @@ class OptionsMenu extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+
+	override function closeSubState():Void
+	{
+		grpControls.visible = true;
+		grpChildren.visible = true;
+		persistentUpdate = true;
+		#if mobileC virtualPad.visible = true; #end
+		super.closeSubState();
+	}
+
+	override function destroy()
+	{
+		#if mobile MusicBeatState.mouseA = true; #end
+		super.destroy();
 	}
 }

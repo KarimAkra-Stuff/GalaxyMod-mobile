@@ -54,11 +54,12 @@ class PlayWindow
 		FlxG.scaleMode = new RatioScaleMode();
 	}
 
-	public static function move(camHUD:FlxCamera)
+	public static function move(camHUD:FlxCamera, camGame:FlxCamera)
 	{
 		if (PlayState.SONG.song.toLowerCase() == "cyber" && PlayState.storyDifficulty != 0)
 		{
-			modcharts.M_cyber.move(camHUD);
+			// modcharts.M_cyber.move(camHUD);
+			modcharts.M_cyber.moveCameras(camGame, camHUD);
 		}
 	}
 }

@@ -204,6 +204,7 @@ class PlayState extends MusicBeatState
 	public static var daPixelZoom:Float = 6;
 
 	var inCutscene:Bool = false;
+	public var hideControlsInCut:Bool = true;
 
 	#if desktop
 	// Discord RPC variables
@@ -771,6 +772,7 @@ class PlayState extends MusicBeatState
 		// UI_camera.zoom = 1;
 
 		// cameras = [FlxG.cameras.list[1]];
+		#if mobileC addMobileControls(); #end
 		startingSong = true;
 
 		if (isStoryMode)
@@ -1204,6 +1206,8 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('introGo-pixel'), 0.6);
 					else
 						FlxG.sound.play(Paths.sound('introGo'), 0.6);
+
+					#if mobileC mobileControls.visible = true; #end
 				case 4:
 			}
 
@@ -1783,19 +1787,19 @@ class PlayState extends MusicBeatState
 			if (practice && health > 1)
 				health = 1;
 
-			if (controls.PAUSE && startedCountdown && canPause)
+			if ((controls.PAUSE #if android || FlxG.android.justReleased.BACK #end) && startedCountdown && canPause)
 			{
 				persistentUpdate = false;
 				persistentDraw = true;
 				paused = true;
 
 				// 1 / 1000 chance for Gitaroo Man easter egg
-				if (FlxG.random.bool(0.1))
-				{
-					// gitaroo man easter egg
-					FlxG.switchState(new GitarooPause());
-				}
-				else
+				// if (FlxG.random.bool(0.1))
+				// {
+				// 	// gitaroo man easter egg
+				// 	FlxG.switchState(new GitarooPause());
+				// }
+				// else
 					openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 				if (SONG.song.toLowerCase() == "cyber" && storyDifficulty != 0)
@@ -1952,22 +1956,12 @@ class PlayState extends MusicBeatState
 			if (camZooming)
 			{
 				// stolen from psych 0.7-
-				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, Math.exp(-elapsed * 3.125 * 0.95));
-				camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, Math.exp(-elapsed * 3.125 * 0.95));
+				// FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, Math.exp(-elapsed * 3.125 * 0.95));
+				// camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, Math.exp(-elapsed * 3.125 * 0.95));
 
 
-				// FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-				// camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, 0.95);
-			}
-
-			
-			if(#if mobile FlxG.keys.justPressed.DOWN || #end FlxG.keys.justPressed.SPACE)
-			{
-				#if android
-				Toast.makeText('camHUD Zoom: ${camHUD.zoom}\nmain cam Zoom: ${FlxG.camera.zoom}', Toast.LENGTH_LONG);
-				#else
-				trace('camHUD Zoom: ${camHUD.zoom}\nmain cam Zoom: ${FlxG.camera.zoom}');
-				#end
+				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+				camHUD.zoom = FlxMath.lerp(PlayWindow.camz, camHUD.zoom, 0.95);
 			}
 
 			FlxG.watch.addQuick("beatShit", curBeat);
@@ -2188,7 +2182,7 @@ class PlayState extends MusicBeatState
 				noteAndStrum.remove(dastrum, true);
 				dastrum.destroy();
 			}
-			PlayWindow.move(camHUD);
+			PlayWindow.move(camGame, camHUD);
 			PlayMoving.special(this);
 			noteAndStrum.sort(sortNoteByShit, FlxSort.DESCENDING);
 		}
@@ -2201,6 +2195,11 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.onComplete();
 		}
 		#end
+
+		// #if mobileC
+		// if(hideControlsInCut)
+		// 	mobileControls.visible = !inCutscene;
+		// #end
 	}
 
 	public function changeHealth(by:Float):Float
@@ -2332,6 +2331,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		#if mobileC mobileControls.visible = false; #end
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;

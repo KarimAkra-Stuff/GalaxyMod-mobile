@@ -238,7 +238,7 @@ class ResultScreen extends FlxSpriteGroup
 			{
 				wrongtxt.alpha += 0.05;
 			}
-			if ((controls.ACCEPT || controls.BACK) && !ended)
+			if ((controls.ACCEPT || controls.BACK || TouchUtil.justReleased) && !ended)
 			{
 				end();
 				ended = true;

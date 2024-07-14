@@ -76,6 +76,8 @@
 	
 	<assets path="CHANGELOG.md" rename='changelog.txt' unless="mobile"/>
 
+	<assets path="mobile" rename="assets/mobile" if="mobileC" />
+
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
 		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
@@ -169,6 +171,7 @@
 		<android target-sdk-version="29" />
 	</section>
 
+	<define name="mobileC" if="mobile" />
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->	
 </project>
